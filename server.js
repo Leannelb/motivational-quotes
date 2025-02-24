@@ -25,20 +25,24 @@ async function sendWhatsappMessage(body) {
 }
 
 // Get motivational quote from ZenQuote
-const getMotivationalQuote = async () => {
+const getMotivationalQuote = async (retries = 3, delay = 1000) => {
     try {
-        const { data } = await axios.get('https://zenquotes.io/api/random');
+        const { data } = await axios.get("https://zenquotes.io/api/random");
         const [quote] = data;
-
         return [
             null,
             {
                 text: quote.q,
-                author: quote.a
+                author: quote.a,
             },
         ];
     } catch (error) {
-        return [error, null]
+        if (retries === 0) {
+            return [error, null];
+        }
+        console.log(`Retrying... (${retries} left)`);
+        await new Promise((resolve) => setTimeout(resolve, delay));
+        return getMotivationalQuote(retries - 1, delay); // Retry logic
     }
 };
 

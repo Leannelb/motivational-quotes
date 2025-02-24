@@ -1,0 +1,2 @@
+The purpose of this app is to update myself each morning with a motivational quote! 
+I love motivational quotes and I love motivation and self improvement in general so this was a fun, quick project to encapsulate some of that.
